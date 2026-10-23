@@ -79,6 +79,7 @@ while True:
                 cv2.putText(captured_image, str(ID), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.3, (0, 255, 0), 1)
                 print(ID, x, y)
 
+    #TODO FIX MATH PROBLEM HERE
     # Calculate the head pose
     M = result.facial_transformation_matrixes[0]  # np.ndarray, Form (4,4)
     R = M[:3, :3]
