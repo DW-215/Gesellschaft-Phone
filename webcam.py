@@ -79,9 +79,12 @@ while True:
                 cv2.putText(captured_image, str(ID), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.3, (0, 255, 0), 1)
                 print(ID, x, y)
 
-    #TODO FIX MATH PROBLEM HERE
     # Calculate the head pose
-    M = result.facial_transformation_matrixes[0]  # np.ndarray, Form (4,4)
+    if len(result.facial_transformation_matrixes) > 0:
+        M = result.facial_transformation_matrixes[0]
+    else: # fallback
+        M = np.eye(4)
+
     R = M[:3, :3]
     pitch = math.degrees(math.asin(max(-1.0, min(1.0, -R[2, 0]))))  # nicken (hoch/runter)
     yaw = math.degrees(math.atan2(R[1, 0], R[0, 0]))  # drehen (links/rechts)
