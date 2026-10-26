@@ -101,8 +101,8 @@ while True:
     yaw = math.degrees(math.atan2(R[1, 0], R[0, 0]))  # drehen (links/rechts)
     roll = math.degrees(math.atan2(R[2, 1], R[2, 2]))  # schief halten
 
-    # TODO add either object detection and or processing for the positioning of the head
-    # TODO replace the phone_cascade with yolo
+    # TODO add processing for the positioning of the head
+    # TODO improve accuracy and performance of the object detection
     # Object Detection Logic
     results = model.predict(
         source=captured_image,
