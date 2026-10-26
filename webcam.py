@@ -94,7 +94,11 @@ while True:
     # TODO add either object detection and or processing for the positioning of the head
     # TODO replace the phone_cascade with a model that can detect the phone (yolo probably)
     # Object Detection Logic
-    phone_cascade = cv2.CascadeClassifier("") # TODO find model
+    phone_cascade = cv2.CascadeClassifier("models/phone_detection.xml") # TODO find model
+
+    if phone_cascade.empty(): # check for the model
+        raise FileNotFoundError("phone_detection.xml konnte nicht geladen werden")
+
     found = phone_cascade.detectMultiScale(img_gray, minSize=(20, 20))
 
     # Display the head pose
