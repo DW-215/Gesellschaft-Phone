@@ -1,0 +1,8 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+
+# Modelle: Binärdateien mit eigener Lizenz, siehe README
+models/*.pt
+models/phone_detection.xml
