@@ -92,6 +92,7 @@ while True:
     roll = math.degrees(math.atan2(R[2, 1], R[2, 2]))  # schief halten
 
     # TODO add either object detection and or processing for the positioning of the head
+    # TODO replace the phone_cascade with a model that can detect the phone (yolo probably)
     # Object Detection Logic
     phone_cascade = cv2.CascadeClassifier("") # TODO find model
     found = phone_cascade.detectMultiScale(img_gray, minSize=(20, 20))
