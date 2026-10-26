@@ -92,9 +92,9 @@ while True:
     roll = math.degrees(math.atan2(R[2, 1], R[2, 2]))  # schief halten
 
     # TODO add either object detection and or processing for the positioning of the head
-    # TODO replace the phone_cascade with a model that can detect the phone (yolo probably)
+    # TODO replace the phone_cascade with yolo
     # Object Detection Logic
-    phone_cascade = cv2.CascadeClassifier("models/phone_detection.xml") # TODO find model
+    phone_cascade = cv2.CascadeClassifier("models/phone_detection.xml")
 
     if phone_cascade.empty(): # check for the model
         raise FileNotFoundError("phone_detection.xml konnte nicht geladen werden")
