@@ -58,8 +58,9 @@ while True:
         break
 
     # Process the captured frame
-    rgb = cv2.cvtColor(captured_image, cv2.COLOR_BGR2RGB)
-    mp_img = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
+    img_rgb = cv2.cvtColor(captured_image, cv2.COLOR_BGR2RGB)
+    img_gray = cv2.cvtColor(captured_image, cv2.COLOR_BGR2GRAY)
+    mp_img = mp.Image(image_format=mp.ImageFormat.SRGB, data=img_rgb)
 
     # Run the landmarker on the frame
     ts_ms = int((time.monotonic() - t0) * 1000)
@@ -90,6 +91,11 @@ while True:
     yaw = math.degrees(math.atan2(R[1, 0], R[0, 0]))  # drehen (links/rechts)
     roll = math.degrees(math.atan2(R[2, 1], R[2, 2]))  # schief halten
 
+    # TODO add either object detection and or processing for the positioning of the head
+    # Object Detection Logic
+    phone_cascade = cv2.CascadeClassifier("") # TODO find model
+    found = phone_cascade.detectMultiScale(img_gray, minSize=(20, 20))
+
     # Display the head pose
     cv2.putText(captured_image, f'Pitch: {pitch:.1f}°', (20, 120), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
     cv2.putText(captured_image, f'Yaw: {yaw:.1f}°', (20, 140), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
@@ -100,6 +106,10 @@ while True:
     fps = 1 / (cTime - pTime)
     pTime = cTime
     cv2.putText(captured_image, f'FPS:{int(fps)}', (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
+    # Display the detected objects
+    for (x, y, w, h) in found:
+        cv2.rectangle(captured_image, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
     # Display the captured frame
     cv2.imshow('Camera', captured_image)
