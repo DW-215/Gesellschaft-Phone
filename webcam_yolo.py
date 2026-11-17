@@ -1,5 +1,6 @@
 ## Webcam Capture
 import time
+import sys
 import cv2
 import mediapipe as mp
 import math
@@ -21,8 +22,15 @@ model = YOLO("models/yolo26s.pt") # using a pretrained model from ultralytics
 # model = YOLO("models/yolo26n.pt") # model for testing, smaller and faster but less accurate
 
 # check for webcam devices
+if sys.platform.startswith("win"):
+    camera_backend = cv2.CAP_DSHOW
+elif sys.platform == "darwin":
+    camera_backend = cv2.CAP_AVFOUNDATION
+else:
+    camera_backend = cv2.CAP_ANY
+
 for index in range(5):
-    candidate = cv2.VideoCapture(index, cv2.CAP_DSHOW)
+    candidate = cv2.VideoCapture(index, camera_backend)
     if candidate.isOpened():
         response, candidate_frame = candidate.read()
         if response and candidate_frame is not None and candidate_frame.size:
